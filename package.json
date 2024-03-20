@@ -1,0 +1,20 @@
+{
+  "name": "youtube_like_backend_one",
+  "version": "1.0.0",
+  "description": "tried to design a backend almost same as youtube used express mongoose mondodb and others",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "shome",
+    "start":"node index.js"
+  },
+  "keywords": [
+    "shome"
+  ],
+  "author": "sowparnaShome",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.0",
+    "mongoose": "^8.2.2"
+  }
+}
