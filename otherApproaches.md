@@ -1,7 +1,6 @@
 ### to conenct with database from index.js file
 
 ```
-function connectDatabase() { }
 ; (async () => {
     try {
         await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
