@@ -17,3 +17,5 @@
 ## cors
 
 ## nodemon
+
+## mongoose-aggregate-paginate-v2
