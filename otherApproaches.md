@@ -1,6 +1,6 @@
 ### to conenct with database from index.js file
 
-```express
+```
 function connectDatabase() { }
 ; (async () => {
     try {
