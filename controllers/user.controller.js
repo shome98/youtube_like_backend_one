@@ -205,6 +205,7 @@ const updateUserAvatar = asyncHandler(async (request, response) => {
     const avatarLocalPath = request.file?.path
     if (!avatarLocalPath) throw new ApiError(400, "Avatar file is missing!!!")
     //delete old avatar
+    //we can just set previous avatar url to null to remove it from db
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     if (!avatar.url) throw new ApiError(400, "Error occurred while uploading the avatar!!!")
     const user = await User.findByIdAndUpdate(
