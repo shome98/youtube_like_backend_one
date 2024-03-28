@@ -1,7 +1,8 @@
-import { ApiError } from "../utils/ApiError.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js"
+import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinaryUpload.js"
+import { deleteFromCloudinary } from "../utils/cloudinaryDelete.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -206,6 +207,11 @@ const updateUserAvatar = asyncHandler(async (request, response) => {
     if (!avatarLocalPath) throw new ApiError(400, "Avatar file is missing!!!")
     //delete old avatar
     //we can just set previous avatar url to null to remove it from db
+    const currentUser=await User.findById(request.user?._id)
+    if (currentUser.avatar) {
+        const userId = currentUser.avatar.split('/').pop().split('.')[0]
+        await deleteFromCloudinary(userId)
+    }
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     if (!avatar.url) throw new ApiError(400, "Error occurred while uploading the avatar!!!")
     const user = await User.findByIdAndUpdate(
@@ -224,6 +230,11 @@ const updateUserAvatar = asyncHandler(async (request, response) => {
 const updateCoverImage = asyncHandler(async (request, response) => {
     const coverImageLocalPath = request.file?.path
     if (!coverImageLocalPath) throw new ApiError(400, "Cover image file is missing!!!")
+    const currentUser=await User.findById(request.user?._id)
+    if (currentUser.coverImage) {
+        const userId = currentUser.coverImage.split('/').pop().split('.')[0]
+        await deleteFromCloudinary(userId)
+    }
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     if (!coverImage.url) throw new ApiError(400, "Error occurred while uploading the cover image")
     const user = await User.findByIdAndUpdate(
